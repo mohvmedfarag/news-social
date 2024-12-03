@@ -1,0 +1,9 @@
+breadcrumbs -> Page path and this is one of the principles of SEO [37]
+slugaable -> this is one of the principles of SEO
+title for pages this is one of the principles of SEO
+Route::match -> suppert 2 methods [GET , POST]
+multi auth or multi guard -> More than one type of user, each type in a separate table
+upload image in video 45 very important
+plugins [ file input bootstrap , summernote bs4 ]
+make:request -> make validation rules for form inputs instead of write it in controller
+$request->merge([]) -> To add new data or modify existing data in request
