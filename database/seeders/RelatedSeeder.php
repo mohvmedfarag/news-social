@@ -19,6 +19,7 @@ class RelatedSeeder extends Seeder
             Related::create([
                 'name' => $faker->name(),
                 'url' => $faker->url(),
+                
             ]);
         }
     }

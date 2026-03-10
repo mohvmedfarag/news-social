@@ -37,40 +37,40 @@
                 <form action="{{route('frontend.dashboard.post.share')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <!-- Add Post Section -->
-                <section id="add-post" class="add-post-section mb-5">
-                    <h2>Add Post</h2>
-                    <div class="post-form p-3 border rounded">
-                        <!-- Post Title -->
-                        <input type="text" name="title" id="postTitle" class="form-control mb-2" placeholder="Post Title" />
-                        <!-- small desc -->
-                        <textarea name="small_desc" class="form-control mb-2" rows="3" placeholder="Enter small description"></textarea>
-                        <!-- Post Content -->
-                        <textarea id="postContent" name="desc" class="form-control mb-2" rows="3" placeholder="What's on your mind?"></textarea>
+                    <section id="add-post" class="add-post-section mb-5">
+                        <h2>Add Post</h2>
+                        <div class="post-form p-3 border rounded">
+                            <!-- Post Title -->
+                            <input type="text" name="title" value="{{ old('title') }}" id="postTitle" class="form-control mb-2" placeholder="Post Title" />
+                            <!-- small desc -->
+                            <textarea name="small_desc" value="{{ old('small_desc') }}" class="form-control mb-2" rows="3" placeholder="Enter small description"></textarea>
+                            <!-- Post Content -->
+                            <textarea id="postContent" name="desc" value="{{ old('desc') }}" class="form-control mb-2" rows="3" placeholder="What's on your mind?"></textarea>
 
-                        <!-- Image Upload -->
-                        <input type="file" id="postImage" name="images[]" class="form-control mb-2" accept="image/*" multiple />
-                        <div class="tn-slider mb-2">
-                            <div id="imagePreview" class="slick-slider"></div>
+                            <!-- Image Upload -->
+                            <input type="file" id="postImage" name="images[]" class="form-control mb-2" accept="image/*" multiple />
+                            <div class="tn-slider mb-2">
+                                <div id="imagePreview" class="slick-slider"></div>
+                            </div>
+
+                            <!-- Category Dropdown -->
+                            <select id="postCategory" name="category_id" class="form-control" style="padding: 0px">
+                                <option value="">Select Category</option>
+                                @foreach ($categories as $category)
+                                <option value="{{$category->id}}">{{$category->name}}</option>
+                                @endforeach
+
+                            </select><br>
+
+                            <!-- Enable Comments Checkbox -->
+                            <label class="form-check-label mb-2">
+                                Enable Comments: <input name="comment_able" type="checkbox" class="" />
+                            </label><br>
+
+                            <!-- Post Button -->
+                            <button type="submit" class="btn btn-primary post-btn">Share</button>
                         </div>
-
-                        <!-- Category Dropdown -->
-                        <select id="postCategory" name="category_id" class="form-control" style="padding: 0px">
-                            <option value="">Select Category</option>
-                            @foreach ($categories as $category)
-                            <option value="{{$category->id}}">{{$category->name}}</option>
-                            @endforeach
-                            
-                        </select><br>
-
-                        <!-- Enable Comments Checkbox -->
-                        <label class="form-check-label mb-2">
-                            Enable Comments: <input name="comment_able" type="checkbox" class="" /> 
-                        </label><br>
-
-                        <!-- Post Button -->
-                        <button type="submit" class="btn btn-primary post-btn">Share</button>
-                    </div>
-                </section>
+                    </section>
                 </form>
 
                 <!-- Posts Section -->
@@ -78,10 +78,7 @@
                     <h2>Recent Posts</h2>
                     <div class="post-list">
                         <!-- Post Item -->
-                    
-                            
-                        
-                            
+
                         @forelse ($posts as $post)
 
                         <div class="post-item mb-4 p-3 border rounded">
@@ -90,12 +87,12 @@
                                     style="width: 50px; height: 50px;" />
                                 <div class="ms-3">
                                     <h5 class="mb-0">{{ Auth::user()->name }}</h5>
-                                    <small class="text-muted">2 hours ago</small>
+                                    <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
                                 </div>
                             </div>
 
                             <h4 class="post-title">{{$post->title}}</h4>
-                            <p class="post-content">{!! chunk_split($post->desc,50) !!}</p>
+                            <p class="post-content">{{ $post->short_desc }}</p>
 
                             <div id="newsCarousel" class="carousel slide" data-ride="carousel">
                                 <ol class="carousel-indicators">
@@ -105,12 +102,12 @@
                                 </ol>
                                 <div class="carousel-inner">
                                     @foreach ($post->images as $image)
-                                        
+
                                     <div class="carousel-item  @if($loop->index == 0) active @endif">
                                         <img src="{{ asset($image->path) }}" class="d-block w-100" alt="First Slide">
                                     </div>
                                     @endforeach
-                                    
+
 
                                     <!-- Add more carousel-item blocks for additional slides -->
                                 </div>
@@ -139,7 +136,7 @@
                                     <a href="javascript:void(0)" onclick="if(confirm('Are You Sure To Delete This Post?')){document.getElementById('deletePost_{{$post->id}}').submit()} return false" class="btn btn-sm btn-outline-primary">
                                         <i class="fas fa-thumbs-up"></i> Delete
                                     </a>
-                                    
+
                                     <button id="commentbtn_{{$post->id}}" class="getComments" post-id = "{{$post->id}}" class="btn btn-sm btn-outline-secondary">
                                         <i class="fas fa-comment"></i>Show Comments
                                     </button>
@@ -149,15 +146,15 @@
                                     <form id="deletePost_{{$post->id}}" action="{{route('frontend.dashboard.post.delete')}}" method="post">
 
                                         @csrf
-                                        <input type="hidden"  name="slug" value="{{$post->slug}}"></input> 
+                                        <input type="hidden"  name="slug" value="{{$post->slug}}"></input>
                                     </form>
                                 </div>
-                                
+
                             </div>
 
                             <!-- Display Comments -->
                             <div id="displayComments_{{$post->id}}" class="comments" style="display: none">
-                               
+
                                 <!-- Add more comments here for demonstration -->
                             </div>
                         </div>

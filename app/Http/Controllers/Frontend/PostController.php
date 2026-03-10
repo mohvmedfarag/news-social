@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     public function show($slug){
-        $mainPost = Post::active()->with(['comments' => function($query){
+        $mainPost = Post::active()->with(['images', 'comments' => function($query){
             $query->latest()->limit(3);
         }])->whereSlug($slug)->first();
         if (!$mainPost) {
@@ -20,7 +20,7 @@ class PostController extends Controller
         $mainPost->increment('num_of_views');
         $category = $mainPost->category;
         $postsOfCategory = $category ? $category->posts()->limit(5)->get() : collect([]);
-        
+
         return view('frontend.show', compact('mainPost', 'postsOfCategory', 'category'));
     }
 
@@ -44,7 +44,7 @@ class PostController extends Controller
 
         $post = Post::findOrFail($request->post_id);
         $post->user->notify( new NewCommentNotify($comment, $post) );
-        
+
         $comment->load('user');
 
         if (! $comment) {

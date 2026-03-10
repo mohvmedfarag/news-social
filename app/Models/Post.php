@@ -2,28 +2,39 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use App\Models\Image;
-use App\Models\Comment;
 use App\Models\Category;
+use App\Models\Comment;
+use App\Models\Image;
+use App\Models\User;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
     use HasFactory, Sluggable;
     protected $guarded = [];
 
+    protected $appends = ['short_desc', 'format_status'];
+
+    protected $casts = [
+        'status' => 'boolean',
+        'comment_able' => 'boolean'
+    ];
+
     public function user(){
        return $this->belongsTo(User::class, 'user_id');
     }
+
     public function category(){
         return $this->belongsTo(Category::class, 'category_id');
     }
+
     public function comments(){
         return $this->hasMany(Comment::class, 'post_id');
     }
+
     public function images(){
         return $this->hasMany(Image::class, 'post_id');
     }
@@ -40,5 +51,37 @@ class Post extends Model
 
     public function scopeActive($query){
         $query->where('status', 1);
+    }
+
+    public function scopeActiveUser($query){
+        $query->where(function($query){
+            $query->whereHas('user', function($user){
+                $user->whereStatus(1);
+            })->orWhere('user_id', null);
+        });
+    }
+
+    public function scopeActiveCategory($query){
+        $query->whereHas('category', function($category){
+            $category->whereStatus(1);
+        });
+    }
+
+    public function getShortDescAttribute(){
+        return Str::limit($this->desc ?? '', 50);
+    }
+
+    public function getFormatStatusAttribute()
+    {
+        return $this->status == true? 'Active':'Not-Active';
+    }
+
+    public function getAbilityAttribute()
+    {
+        return $this->comment_able == true? 'on':'off';
+    }
+
+    public function admin(){
+        return $this->belongsTo(Admin::class,'admin_id', 'id');
     }
 }

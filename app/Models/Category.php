@@ -11,6 +11,10 @@ class Category extends Model
     use HasFactory;
     protected $guarded = [];
 
+    protected $casts = [
+        "status"=> "boolean",
+        ];
+
     public function posts(){
         return $this->hasMany(Post::class , 'category_id');
     }

@@ -51,7 +51,7 @@
                             <span class="sr-only">Next</span>
                         </a>
                     </div>
-                    <div class="alert alert-info">Author : {{$mainPost->user->name}}</div>
+                    <div class="alert alert-info">Author : {{$mainPost->user->name ?? $mainPost->admin->name}}</div>
                     <div class="sn-content">
                         {!! $mainPost->desc !!}
                     </div>
@@ -88,7 +88,7 @@
                             @endforeach
                             <!-- Add more comments here for demonstration -->
                         </div>
-                        
+
                         <!-- Show More Button -->
                         @if ($mainPost->comments->count() > 2)
                         <button id="showMoreBtn" class="show-more-btn">Show more</button>
@@ -129,7 +129,11 @@
                                 @foreach ($postsOfCategory as $post)
                                     <div class="nl-item">
                                         <div class="nl-img">
-                                            <img src="{{ asset($post->images->first()->path) }}" />
+                                            @php
+                                                $image = $post->images->first();
+                                            @endphp
+
+                                            <img src="{{ asset($image ? $image->path : 'assets/default.jpg') }}" />
                                         </div>
                                         <div class="nl-title">
                                             <a
@@ -176,7 +180,11 @@
                                         @foreach ($latestPosts as $post)
                                             <div class="tn-news">
                                                 <div class="tn-img">
-                                                    <img src="{{ asset($post->images->first()->path) }}" />
+                                                    @php
+                                                        $image = $post->images->first();
+                                                    @endphp
+
+                                                    <img src="{{ asset($image ? $image->path : 'assets/default.jpg') }}" />
                                                 </div>
                                                 <div class="tn-title">
                                                     <a
@@ -260,7 +268,7 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
-                    
+
                     $('#errorMsg').hide();
                     $('.comments').prepend(`
                          <div class="comment">

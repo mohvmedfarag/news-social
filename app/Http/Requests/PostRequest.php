@@ -25,10 +25,11 @@ class PostRequest extends FormRequest
             'title' => 'required|string',
             'desc' => 'required|string',
             'category_id' => 'exists:categories,id',
-            'comment_able' => 'in:on,off',
+            'comment_able' => 'in:on,off,0,1',
             'images' => 'nullable',
-            'images.*' => 'image|mimes:png,jpg,jpeg,gif', 
-            'small_desc' => 'required|min:50',
+            'images.*' => 'image',
+            'small_desc' => 'nullable|min:50',
+            'status' => 'nullable|in:0,1'
         ];
     }
 }

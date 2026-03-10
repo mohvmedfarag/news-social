@@ -1,17 +1,20 @@
 <?php
 
-use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\Admin\User\UserController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\Frontend\Dashboard\NotificationController;
-use App\Http\Controllers\Frontend\Dashboard\ProfileController;
-use App\Http\Controllers\Frontend\Dashboard\SettingController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\PostController;
+use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Frontend\NewSubscriberController;
-use App\Http\Controllers\SearchController;
+use App\Http\Controllers\Frontend\Dashboard\ProfileController;
+use App\Http\Controllers\Frontend\Dashboard\SettingController;
+use App\Http\Controllers\Frontend\Dashboard\NotificationController;
 
 Route::redirect('/', '/home');
 
@@ -64,6 +67,8 @@ Route::group([
             Route::get('delete-all', 'deleteAll')->name('notifications.deleteAll');
         });
     });
+
+
 }
 );
 
@@ -72,4 +77,5 @@ Route::controller(VerificationController::class)->name('verification.')->prefix(
     Route::get('verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verify');
     Route::post('resend', [VerificationController::class, 'resend'])->name('resend');
 });
+
 Auth::routes();

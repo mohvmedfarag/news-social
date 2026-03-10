@@ -19,8 +19,7 @@
                         <a href="{{ route('register') }}">Register</a>
                     @endguest
                     @auth()
-                        <a href="javascript:void(0)"
-                            onclick="if(confirm('Do You Want To Logout')){document.getElementById('form-logout').submit()} return false;">Logout</a>
+                        <a href="javascript:void(0)" onclick="if(confirm('Do You Want To Logout')){document.getElementById('form-logout').submit()} return false;">Logout</a>
                     @endauth
                 </div>
                 <form id="form-logout" method="post" action="{{ route('logout') }}"> @csrf </form>

@@ -25,6 +25,7 @@ class ProfileController extends Controller
         $posts = Post::active()->with(['images'])->where('user_id', auth()->user()->id)->latest()->get();
         return view('frontend.dashboard.profile', compact('posts'));
     }
+    
     public function sharePost(PostRequest $request)
     {
         $request->validated();

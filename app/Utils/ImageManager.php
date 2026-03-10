@@ -1,7 +1,6 @@
 <?php
 namespace App\Utils;
 
-use App\Http\Requests\Frontend\SettingRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 
@@ -18,7 +17,8 @@ class ImageManager{
             }
         }
     }
-    public static function uploadImage(SettingRequest $request, $user){
+    
+    public static function uploadImage($request, $user){
         if ($request->hasFile('image')) {
             $image = $request->image;
             self::deleteImageFromLocal($user->image);
@@ -46,15 +46,13 @@ class ImageManager{
         }
     }
 
-    private static function storeImageInLocal($image, $folder, $file){
+    public static function storeImageInLocal($image, $folder, $file){
         $path = $image->storeAs('uploads/'.$folder, $file, ['disk' => 'uploads']);
         return $path;
     }
 
-    private static function generateImageName($image){
+    public static function generateImageName($image){
         $file = Str::uuid() . time() . '.' . $image->getClientOriginalExtension();
         return $file;
     }
-    
-
 }

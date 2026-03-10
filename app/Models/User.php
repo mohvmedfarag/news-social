@@ -9,10 +9,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -32,6 +33,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'status'
     ];
 
+    protected $append = ['block_status'];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -47,17 +50,25 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return array<string, string>
      */
+
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'status' => 'boolean'
         ];
     }
+
     public function posts(){
-        $this->hasMany(Post::class, 'user_id');
+        return $this->hasMany(Post::class, 'user_id');
     }
+
     public function comments(){
-        $this->hasMany(Comment::class, 'user_id');
+        return $this->hasMany(Comment::class, 'user_id');
+    }
+
+    public function getBlockStatusAttribute(){
+        return $this->status == true? 'active':'blocked';
     }
 }
