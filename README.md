@@ -113,20 +113,33 @@ php artisan serve
 ## 📊 Current Development Progress
 
 ✔ User Authentication
+
 ✔ User Dashboard
+
 ✔ Posts System
+
 ✔ Comments System
+
 ✔ Post Views Counter
+
 ✔ Enable / Disable Comments
+
 ✔ Real-time Notifications (Pusher)
+
 ✔ Redis Caching for Home Page Posts
+
 ✔ SEO Optimization
 
 ✔ Admin Authentication
+
 ✔ Admin Reset Password
+
 ✔ User Management
+
 ✔ Category Management
+
 ✔ Post Management
+
 ✔ Settings Management
 
 ## 🚧 More features coming soon.
