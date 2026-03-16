@@ -1,2 +1,0 @@
-Route::match -> suppert 2 methods [GET , POST]
-plugins [ file input bootstrap , summernote bs4 ]
