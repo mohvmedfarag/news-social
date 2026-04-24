@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'categories' => 'Categories',
+    'posts' => 'Posts',
+    'coupons' => 'Coupons',
+    'users' => 'Users',
+    'admins' => 'Admins',
+    'roles' => 'Roles',
+    'settings' => 'Settings',
+    'reports' => 'Reports',
+    'dashboard' => 'Dashboard',
+    'profile' => 'Profile',
+    'home' => 'Home',
+    'contact' => 'Contact',
+    'about' => 'About',
+    'blog' => 'Blog',
+    'newsLetters' => 'News Letters',
+    'banners' => 'Banners',
+    'sliders' => 'SLiders',
+    'pages' => 'Pages',
+    'faqs' => 'Faqs',
+    'comments' => 'Comments',
+    'socials' => 'Socials',
+    'settings' => 'Settings',
+    'menus' => 'Menus',
+];

@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\Admin\AdminController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Category\CategoryController;
 use App\Http\Controllers\Admin\Post\PostController;
+use App\Http\Controllers\Admin\Role\RoleController;
 use App\Http\Controllers\Admin\Setting\SettingController;
 use App\Http\Controllers\Admin\User\UserController;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +16,9 @@ Route::group(['prefix' => 'admin/', 'as' => 'admin.'], function(){
 });
 
 Route::group(['prefix' => 'admin/', 'as' => 'admin.', 'middleware' => 'auth:admin'], function(){
+
+    Route::resource('roles', RoleController::class);
+
     Route::resource('users', UserController::class);
     Route::post('users/{user}/change-status', [UserController::class,'changeStatus'])->name('users.changeStatus');
 
@@ -26,6 +31,9 @@ Route::group(['prefix' => 'admin/', 'as' => 'admin.', 'middleware' => 'auth:admi
     ->name('posts.changeStatus');
 
     Route::resource('settings', SettingController::class)->only(['index', 'update']);
+
+    Route::resource('admins' ,AdminController::class);
+    Route::post('admins/{admin}/change-status', [AdminController::class,'changeStatus'])->name('admins.changeStatus');
 
     Route::get('home', function(){
         return view('admin.index');
