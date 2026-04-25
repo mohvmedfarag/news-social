@@ -49,6 +49,8 @@ class UpdateAdminRequest extends FormRequest
                 'min:6',
                 'confirmed',
             ],
+
+            'role_id' => ['nullable', 'exists:roles,id'],
         ];
     }
 }

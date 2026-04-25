@@ -3,9 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
 
 class Admin extends Authenticatable
 {
@@ -26,11 +24,26 @@ class Admin extends Authenticatable
         ];
     }
 
-    public function posts(){
+    public function posts()
+    {
         return $this->hasMany(Post::class, 'admin_id', 'id');
     }
 
-    public function role(){
+    public function role()
+    {
         return $this->belongsTo(Role::class, 'role_id', 'id');
+    }
+
+    public function canAccess($permission)
+    {
+        $role = $this->role;
+
+        if (! $role) {
+            return false;
+        }
+
+        $permissions = json_decode($role->permissions, true) ?? [];
+
+        return in_array($permission, $permissions);
     }
 }

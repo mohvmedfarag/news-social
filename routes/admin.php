@@ -20,7 +20,8 @@ Route::group(['prefix' => 'admin/', 'as' => 'admin.', 'middleware' => 'auth:admi
     Route::resource('roles', RoleController::class);
 
     Route::resource('users', UserController::class);
-    Route::post('users/{user}/change-status', [UserController::class,'changeStatus'])->name('users.changeStatus');
+    Route::post('users/{user}/change-status', [UserController::class,'changeStatus'])
+    ->name('users.changeStatus');
 
     Route::resource('categories', CategoryController::class);
     Route::post('categories/{category}/change-status', [CategoryController::class,'changeStatus'])
@@ -33,7 +34,8 @@ Route::group(['prefix' => 'admin/', 'as' => 'admin.', 'middleware' => 'auth:admi
     Route::resource('settings', SettingController::class)->only(['index', 'update']);
 
     Route::resource('admins' ,AdminController::class);
-    Route::post('admins/{admin}/change-status', [AdminController::class,'changeStatus'])->name('admins.changeStatus');
+    Route::post('admins/{admin}/change-status', [AdminController::class,'changeStatus'])
+    ->name('admins.changeStatus');
 
     Route::get('home', function(){
         return view('admin.index');

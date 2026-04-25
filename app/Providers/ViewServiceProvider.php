@@ -2,10 +2,9 @@
 
 namespace App\Providers;
 
-use App\Models\Post;
-use App\Models\Related;
 use App\Models\Category;
-use Illuminate\Support\Facades\Cache;
+use App\Models\Related;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class ViewServiceProvider extends ServiceProvider
@@ -23,6 +22,10 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (! Schema::hasTable('related') || ! Schema::hasTable('categories')) {
+            return;
+        }
+
         $related_sites = Related::select('name', 'url')->get();
         $categories = Category::select('id', 'name', 'slug')->get();
         view()->share([

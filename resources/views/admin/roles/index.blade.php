@@ -25,6 +25,7 @@
                                 <th>#</th>
                                 <th>Role</th>
                                 <th>Permissions</th>
+                                <th>Related Admins</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -39,6 +40,7 @@
                                             <span class="badge badge-info">{{ $perm }}</span>
                                         @endforeach
                                     </td>
+                                    <td>{{ $role->admins->count() }}</td>
                                     <td>
                                         <a href="javascript:void(0)"
                                             onclick="if(confirm('Do you want to delete the role')){document.getElementById('delete_role_{{ $role->id }}').submit()} return false"><i

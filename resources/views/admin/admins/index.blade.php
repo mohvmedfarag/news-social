@@ -24,10 +24,10 @@
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
+                                <th>Role</th>
                                 <th>User Name</th>
                                 <th>Email</th>
                                 <th>Status</th>
-                                {{-- <th>Role</th> --}}
                                 <th>Created At</th>
                                 <th>Actions</th>
                             </tr>
@@ -38,10 +38,10 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $admin->name }}</td>
+                                    <td>{{$admin->role->role}}</td>
                                     <td>{{ $admin->username }}</td>
                                     <td>{{ $admin->email }}</td>
                                     <td>{{ $admin->status == 1 ? 'Active' : 'Not Active' }}</td>
-                                    {{-- <td>{{$admin->authorization->role}}</td> --}}
                                     <td>{{ $admin->created_at?->format('Y-m-d h:i a') ?? 'N/A' }}</td>
                                     <td>
                                         <a href="javascript:void(0)"

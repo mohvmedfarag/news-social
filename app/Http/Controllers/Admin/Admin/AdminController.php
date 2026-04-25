@@ -8,15 +8,16 @@ use App\Http\Requests\Dashboard\CreateAdminRequest;
 use App\Http\Requests\Dashboard\UpdateAdminRequest;
 use App\Models\Admin;
 use App\Models\Authorization;
+use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('can:admins');
-    // }
+    public function __construct()
+    {
+        $this->middleware('can:admins');
+    }
 
     public function index()
     {
@@ -59,9 +60,9 @@ class AdminController extends Controller
 
     public function create()
     {
-        // $authorizations = Authorization::select('id', 'role')->get();
+        $roles = Role::select('id', 'role')->get();
 
-        return view('admin.admins.create');
+        return view('admin.admins.create', compact('roles'));
     }
 
     /**
@@ -77,16 +78,18 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'New Admin Created Successfully!');
     }
 
-    public function show(string $id) {}
+    public function show(Admin $admin) {
+        return view('admin.admins.show', compact('admin'));
+    }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Admin $admin)
     {
-        // $authorizations = Authorization::select('id', 'role')->get();
+        $roles = Role::select('id', 'role')->get();
 
-        return view('admin.admins.edit', compact('admin'));
+        return view('admin.admins.edit', compact('admin', 'roles'));
     }
 
     /**

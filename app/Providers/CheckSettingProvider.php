@@ -2,9 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\Category;
-use App\Models\Related;
 use App\Models\Setting;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class CheckSettingProvider extends ServiceProvider
@@ -22,6 +21,10 @@ class CheckSettingProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (! Schema::hasTable('settings')) {
+            return;
+        }
+
         $getSetting = Setting::firstOr(function () {
             return Setting::create([
                 'site_name' => 'news',
@@ -38,11 +41,12 @@ class CheckSettingProvider extends ServiceProvider
                 'small_desc' => 'this is app for news social networking site like facebook and twitter and other',
             ]);
         });
-        $getSetting->whatsapp = "https:/wa.me/" . $getSetting->phone;
+
+        $getSetting->whatsapp = 'https:/wa.me/'.$getSetting->phone;
         view()->share(
             [
                 'getSetting' => $getSetting,
-                
+
             ]
         );
     }

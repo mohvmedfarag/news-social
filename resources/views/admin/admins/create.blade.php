@@ -61,13 +61,13 @@
                         </div>
                     </div>
                 </div>
-                {{-- <div class="row">
+                <div class="row">
                     <div class="col-12">
                         <div class="form-group">
                             Select Role:<select name="role_id" class="form-control">
                                 <option selected disabled>Select Role</option>
-                                 @forelse ($authorizations as $authorization )
-                                 <option value="{{ $authorization->id }}">{{ $authorization->role }}</option>
+                                 @forelse ($roles as $role )
+                                 <option value="{{ $role->id }}">{{ $role->role }}</option>
                                  @empty
                                   <option disabled selected> No Roles</option>
                                  @endforelse
@@ -78,7 +78,7 @@
                             @enderror
                         </div>
                     </div>
-                </div> --}}
+                </div>
 
                 <div class="row">
                     <div class="col-12">

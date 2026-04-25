@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:roles');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -98,10 +103,16 @@ class RoleController extends Controller
     public function destroy(string $id)
     {
         $role = Role::findOrFail($id);
-        $role = $role->delete();
+
+        if ($role->admins->count() > 0) {
+            return redirect()->back()->with('error', 'Please Delete Related Admins First');
+        }
+
         if (! $role) {
             return redirect()->back()->with('error', 'try Again Latter!');
         }
+
+        $role = $role->delete();
 
         return redirect()->back()->with('success', 'role Deleted Successfully!');
     }

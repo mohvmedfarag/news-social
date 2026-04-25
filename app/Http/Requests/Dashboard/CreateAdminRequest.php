@@ -27,6 +27,7 @@ class CreateAdminRequest extends FormRequest
             'email' => 'required|email|max:100',
             'status' => 'nullable|boolean',
             'password' => 'required|confirmed|string|max:50',
+            'role_id' => 'nullable|exists:roles,id',
         ];
     }
 }
